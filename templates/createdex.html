@@ -1,0 +1,16 @@
+<html>
+	<body>
+		<form  action = "http://localhost:5000/editex" method = "GET" name="expubyme" >
+			<table>
+				<tr><th>Name</th><th>Edit</th><th>Participations</th></tr>
+				{% for e in exs %}
+					<tr>
+						<td>{{ e[1].title() }}</td>
+						<td><button name="xedit" value="{{ e[0] }}">Edit</button></td>
+						<td><button name="xparts" value="{{ e[0] }}">View</button></td>
+					</tr>
+				{% endfor %}
+			</table>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+	<head>
+      	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'test.css') }}">
+      	<script type = "text/javascript" src = "{{ url_for('static', filename = 'hello.js') }}" ></script>
+   	</head>
+	<body>	
+		<form  action = "http://localhost:5000/participate" method = "GET" name="expartform" >
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Category</th>
+					<th>City</th>
+					<th>Day</th>
+					<th>View Details</th>
+					<th>Participate</th>
+				</tr>
+				{% for r in result %}
+				<tr>	
+					<td>{{ r['ex_name'].title() }}</td>
+					<td>{{ r['cat_name'].title() }}</td>
+					<td>{{ r['ex_city'].title() }}</td>
+					<td>{{ r['ex_start_date'][:-7] }}</td>
+					<td><a href="http://localhost:5000/details/{{ r['ex_id'] }}" target="_blank"><button type="button">Details</button></a></td>
+					<td>
+						{% if r['r_id'] %}
+							<button type="submit" value="{{ r['r_id'] }}" name="cexbtn">Cancel</button>
+						{% else %}
+							<button type="submit" value="{{ r['ex_id'] }}" name="pexbtn">Exhibit</button>
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</form>
+	</body>
+<html>

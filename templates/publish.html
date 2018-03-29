@@ -1,0 +1,33 @@
+<html>
+	<head>
+      	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'test.css') }}">
+      	<script type = "text/javascript" src = "{{ url_for('static', filename = 'hello.js') }}" ></script>
+   	</head>
+	<body>
+		<form action = "http://localhost:5000/result" method = "POST" enctype = "multipart/form-data">
+			<p>Name <input type = "text" name = "exname" /></p>
+			<p>Category <select name="excat">
+				{% for c in cats %}
+				<option value="{{ c[0] }}">{{ c[1] }}</option>
+				{% endfor %}
+			</select></p>
+			<p>Address <textarea name="exaddress" placeholder="Address"></textarea></p>
+			<p>City 
+				<select name="excity">
+					<option value="mumbai">Mumbai</option>
+					<option value="delhi">Delhi</option>
+					<option value="banglore">Banglore</option>
+					<option value="pune">Pune</option>
+					<option value="madras">Madras</option>
+				</select>
+			</p>
+			<p>Starting at <input type = "datetime-local" name = "exstart" id="ixs" /></p>
+			<p>Ending at <input type ="datetime-local" name = "exend" id="ixe" /></p>
+			<p><input type="radio" name="exvrr" value="yes">Yes</p>
+			<p><input type="radio" name="exvrr" value="no">No</p>
+			<p>Description <textarea name="exnote" placeholder="Description"></textarea></p>
+			<p><input type="file" name="exdoc"/></p>
+			<p><input type = "submit" name = "exsubmit" onClick="return tsformat()" /></p>
+		</form>
+	</body>
+</html>
