@@ -1,5 +1,20 @@
 <html>
 	<body>
-		{{ regs }}
+		<table>
+			<tr>
+				<th>Reg ID</th>
+				<th>Name</th>
+				<th>Email ID</th>
+				<th>Role</th>
+			</tr>
+			{% for r in regs %}
+				<tr>
+					<td>{{ r['r_id'] }}</td>
+					<td>{{ r['u_name'].title() }}</td>
+					<td>{{ r['u_email'] }}</td>
+					<td>{{ r['ut_type'].title() }}</td>
+				</tr>
+			{% endfor %}
+		</table>
 	</body>
 </html>
