@@ -1,13 +1,15 @@
 <html>
 	<body>
-		<form  action = "http://localhost:5000/editex" method = "GET" name="expubyme" >
+		{{ sess.ut_type }}
+		<form  action = "http://localhost:5000/exaction	" method = "GET" name="expubyme" >
 			<table>
-				<tr><th>Name</th><th>Edit</th><th>Participations</th></tr>
+				<tr><th>Name</th><th>Details</th><th>Edit</th><th>Participations</th></tr>
 				{% for e in exs %}
 					<tr>
-						<td>{{ e[1].title() }}</td>
-						<td><button name="xedit" value="{{ e[0] }}">Edit</button></td>
-						<td><button name="xparts" value="{{ e[0] }}">View</button></td>
+						<td>{{ e['ex_name'].title() }}</td>
+						<td><a href="http://localhost:5000/details/{{ e['ex_id'] }}" target="_blank"><button type="button">View</button></a></td>
+						<td><button name="xedit" value="{{ e['ex_id'] }}">Edit</button></td>
+						<td><button name="xparts" value="{{ e['ex_id'] }}">View</button></td>
 					</tr>
 				{% endfor %}
 			</table>

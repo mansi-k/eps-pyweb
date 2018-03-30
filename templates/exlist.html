@@ -1,0 +1,45 @@
+<html>
+	<head>
+      	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'test.css') }}">
+      	<script type = "text/javascript" src = "{{ url_for('static', filename = 'hello.js') }}" ></script>
+   	</head>
+	<body>
+		<h1>All Exhibitions</h1>
+		<form  action = "http://localhost:5000/participate" method = "GET" name="expartform" >
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Category</th>
+					<th>City</th>
+					<th>Day</th>
+					<th>Details</th>
+					{% if sess %}
+						<th>Participate</th>
+					{% endif %}
+				</tr>
+				{% for r in exs %}
+				<tr>	
+					<td>{{ r.ex_name.title() }}</td>
+					<td>{{ r.cat_name.title() }}</td>
+					<td>{{ r.ex_city.title() }}</td>
+					<td>{{ r.ex_start_date[:-7] }}</td>
+					<td><a href="http://localhost:5000/details/{{ r.ex_id }}" target="_blank"><button type="button">View</button></a></td>
+					{% if sess %}
+						<td>
+							{% if r.r_id %}
+								<button type="submit" value="{{ r.r_id }}" name="cexbtn">Cancel</button>
+							{% elif sess.ut_type=='exhibitor' and sess.u_id!=r.ex_creator_id %}
+								<button type="submit" value="{{ r.ex_id }}" name="pexbtn">Collaborate</button>
+							{% elif sess.u_id!=r.ex_creator_id %}
+								<button type="submit" value="{{ r.ex_id }}" name="pexbtn">Visit</button>
+							{% elif sess.u_id==r.ex_creator_id %}
+								<a href="http://localhost:5000/publishedbyme"><button type="button">View</button></a>
+							{% endif %}
+						</td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</table>
+		</form>
+	</body>
+<html>

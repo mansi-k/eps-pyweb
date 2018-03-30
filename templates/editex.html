@@ -8,7 +8,7 @@
 			<p>Name <input type = "text" name = "exname" value="{{ ex['ex_name'] }}" /></p>
 			<p>Category <select name="excat">
 				{% for c in cats %}
-					<option value="{{ c[0] }}">{{ c[1] }}</option>
+					<option value="{{ c['cat_id'] }}">{{ c['cat_name'] }}</option>
 				{% endfor %}
 			</select></p>
 			<p>Address <textarea name="exaddress" placeholder="Address">{{ ex['ex_address'] }}</textarea></p>

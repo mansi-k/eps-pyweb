@@ -179,9 +179,9 @@ create table dhfregexo as (select a.*, b.ex_city from mitali.registration a, phf
 
 select * from exhibition;
 
-delete from exhibition where ex_id=9;
+delete from exhibition where ex_id=10;
 
-update exhibition set ex_id=8 where ex_id=9;
+update exhibition set ex_id=8 where ex_id=10;
 
 select * from exhibition e left join cat c on ex_cat_id = cat_id left join mitali.registration on r_eid = ex_id and r_uid = 10 order by ex_id;
 

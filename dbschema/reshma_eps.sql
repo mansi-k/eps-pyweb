@@ -49,6 +49,86 @@ create table phfexcitym as select * from mansi.exhibition where ex_city='mumbai'
 
 create table dhfregexm as (select a.*, b.ex_city from mitali.registration a, phfexcitym b where a.r_eid=b.ex_id);
 
+create table pvfexhibition as select ex_id, ex_name, ex_cat_id, ex_city, ex_start_date, ex_creator_id, ex_is_vrr from mansi.exhibition;
+
+select * from pvfexhibition;
+
+drop table pvfexhibition;
+
+CREATE OR REPLACE TRIGGER VFEX_INSERT
+AFTER INSERT ON mansi.EXHIBITION
+FOR EACH ROW
+BEGIN
+INSERT INTO pvfexhibition
+VALUES(:NEW.EX_ID,
+:NEW.EX_NAME,
+:NEW.EX_CAT_ID,
+:NEW.EX_CITY,
+:NEW.EX_START_DATE,
+:NEW.EX_CREATOR_ID,
+:NEW.EX_IS_VRR);
+END;
+/
+
+CREATE OR REPLACE TRIGGER VFEX_UPDATE
+AFTER UPDATE ON mansi.EXHIBITION
+FOR EACH ROW
+BEGIN
+UPDATE pvfexhibition
+set ex_id=:new.ex_id, 
+ex_name=:new.ex_name,
+ex_cat_id=:new.ex_cat_id,
+ex_start_date=:new.ex_start_date,
+ex_is_vrr=:new.ex_is_vrr
+where ex_id=:old.ex_id;
+END;
+/
+
+create or replace trigger vfex_delete
+after delete on mansi.exhibition
+for each row
+begin
+delete from pvfexhibition
+where ex_id=:old.ex_id;
+end;
+/
+
+create table vfuseracc as select u_id, u_type, u_name, u_email from useracc;
+
+select * from vfuseracc;
+
+CREATE OR REPLACE TRIGGER VFU_INSERT
+AFTER INSERT ON useracc
+FOR EACH ROW
+BEGIN
+INSERT INTO vfuseracc
+VALUES(:NEW.U_ID,
+:NEW.U_TYPE,
+:NEW.U_NAME,
+:NEW.U_EMAIL);
+END;
+/
+
+CREATE OR REPLACE TRIGGER VFU_UPDATE
+AFTER UPDATE ON useracc
+FOR EACH ROW
+BEGIN
+UPDATE vfuseracc
+set u_id=:new.u_id,
+u_name=:new.u_name,
+u_email=:new.u_email;
+END;
+/
+
+create or replace trigger vfu_delete
+after delete on useracc
+for each row
+begin
+delete from vfuseracc
+where u_id=:old.u_id;
+end;
+/
+
 commit;
 
 
