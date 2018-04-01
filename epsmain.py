@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, json
 from controllers.EPSController import EPSController
 from controllers.UserController import UserController
 from controllers.ExhibitionController import ExhibitionController
@@ -30,13 +30,19 @@ def search():
 def details(exid):
     return xc.cDetails(exid)
 
-@app.route('/participate',methods = ['GET'])
+@app.route('/participate',methods = ['POST'])
 def participate():
-    if request.method == 'GET':
-        if request.args.get('pexbtn'):
-            return rc.cParticipate(request.args.get('pexbtn'))
-        elif request.args.get('cexbtn'):
-            return rc.cPCancel(request.args.get('cexbtn'))
+    if request.method == 'POST':
+        if 'usid' in request.json:
+            if rc.cParticipate(request.json['usid']):
+                return json.dumps({'status': 'ok'})
+            else:
+                return json.dumps({'status': 'fail'})
+        elif 'rgid' in request.json:
+            if rc.cPCancel(request.json['rgid']):
+                return json.dumps({'status': 'ok'})
+            else:
+                return json.dumps({'status': 'fail'})
 
 @app.route('/publish/')
 def publish():
@@ -51,13 +57,13 @@ def onpublish():
 def pubyme():
     return ec.cPubyme()
 
-@app.route('/exaction',methods = ['GET'])
-def exaction():
-    if request.method == 'GET':
-        if request.args.get('xedit'):
-            return ec.cExEdit(request.args.get('xedit'))
-        elif request.args.get('xparts'):
-            return ec.cExRegs(request.args.get('xparts'))
+@app.route('/edit/<exid>')
+def edit(exid):
+    return ec.cExEdit(exid)
+
+@app.route('/regs/<exid>')
+def regs(exid):
+    return ec.cExRegs(exid)
 
 @app.route('/update',methods = ['POST'])
 def update():

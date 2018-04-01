@@ -1,20 +1,55 @@
-<html>
-	<body>
-		<table>
-			<tr>
-				<th>Reg ID</th>
-				<th>Name</th>
-				<th>Email ID</th>
-				<th>Role</th>
-			</tr>
-			{% for r in regs %}
+{% extends "layouts/navbar.html" %}
+
+{% block content %}
+<div class="container mainblock">
+	<h2>{{ regs[0].ex_name }}</h2>
+	<ul class="nav nav-pills nav-justified">
+		<li class="active"><a data-toggle="tab" href="#enterprises">Enterprises</a></li>
+		<li><a data-toggle="tab" href="#visitors">Visitors</a></li>
+	</ul>
+	<div class="tab-content"><br>
+		<div id="enterprises" class="tab-pane fade in active">
+			<h3>Enterprises</h3>
+			<table class="table table-striped">
 				<tr>
-					<td>{{ r['r_id'] }}</td>
-					<td>{{ r['u_name'].title() }}</td>
-					<td>{{ r['u_email'] }}</td>
-					<td>{{ r['ut_type'].title() }}</td>
+					<th>Reg ID</th>
+					<th>Name</th>
+					<th>Email ID</th>
+					<th>Role</th>
 				</tr>
-			{% endfor %}
-		</table>
-	</body>
-</html>
+				{% for r in regs %}
+				 	{% if r.ut_type == 'enterprise' %}
+						<tr>
+							<td>{{ r['r_id'] }}</td>
+							<td>{{ r['u_name'].title() }}</td>
+							<td>{{ r['u_email'] }}</td>
+							<td>{{ r['ut_type'].title() }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
+		</div>
+		<div id="visitors" class="tab-pane fade">
+			<h3>Visitors</h3>
+			<table class="table table-striped">
+				<tr>
+					<th>Reg ID</th>
+					<th>Name</th>
+					<th>Email ID</th>
+					<th>Role</th>
+				</tr>
+				{% for r in regs %}
+				 	{% if r.ut_type == 'visitor' %}
+						<tr>
+							<td>{{ r['r_id'] }}</td>
+							<td>{{ r['u_name'].title() }}</td>
+							<td>{{ r['u_email'] }}</td>
+							<td>{{ r['ut_type'].title() }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

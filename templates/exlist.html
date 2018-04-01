@@ -1,45 +1,222 @@
-<html>
-	<head>
-      	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'test.css') }}">
-      	<script type = "text/javascript" src = "{{ url_for('static', filename = 'hello.js') }}" ></script>
-   	</head>
-	<body>
-		<h1>All Exhibitions</h1>
-		<form  action = "http://localhost:5000/participate" method = "GET" name="expartform" >
-			<table>
+{% extends "layouts/navbar.html" %}
+
+{% block content %}
+<div class="container mainblock">
+	<h1>Exhibitions</h1><br>
+
+	<ul class="nav nav-pills nav-justified">
+		<li class="active"><a data-toggle="tab" href="#ongoing">Ongoing</a></li>
+		<li><a data-toggle="tab" href="#upcoming">Upcoming</a></li>
+		<li><a data-toggle="tab" href="#past">Past</a></li>
+	</ul>
+	<div class="tab-content"><br>
+		<div id="ongoing" class="tab-pane fade in active">
+			<h2>Ongoing Exhibitions</h2>
+			<nav class="navbar navbar-inverse control-bar">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li>
+							<div class="input-group">
+								<select class="form-control" id="sorto" onchange="cityexs(this)">
+									<option value="all">All cities</option>
+									<option value="Mumbai">Mumbai</option>
+									<option value="Banglore">Banglore</option>
+									<option value="Delhi">Delhi</option>
+									<option value="Madras">Madras</option>
+									<option value="Pune">Pune</option>
+								</select>
+							</div>
+						</li>
+					</ul>
+					<ul class="navbar-form navbar-center">
+						<li>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search" name="search" oninput="searchexs(this)">
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<div class="input-group">
+								<select class="form-control" id="cato" onchange="catexs(this)">
+									<option value="all">All categories</option>
+									{% for c in cats %}
+										<option>{{ c.cat_name.title() }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<table class="table table-striped" id="ongoingtable">
 				<tr>
 					<th>Name</th>
 					<th>Category</th>
 					<th>City</th>
 					<th>Day</th>
 					<th>Details</th>
-					{% if sess %}
-						<th>Participate</th>
-					{% endif %}
 				</tr>
 				{% for r in exs %}
-				<tr>	
+				{% if exd[r.ex_id]=='ongoing' %}
+				<tr aria-controls="{{ r.ex_name }}">
 					<td>{{ r.ex_name.title() }}</td>
 					<td>{{ r.cat_name.title() }}</td>
 					<td>{{ r.ex_city.title() }}</td>
 					<td>{{ r.ex_start_date[:-7] }}</td>
-					<td><a href="http://localhost:5000/details/{{ r.ex_id }}" target="_blank"><button type="button">View</button></a></td>
-					{% if sess %}
-						<td>
-							{% if r.r_id %}
-								<button type="submit" value="{{ r.r_id }}" name="cexbtn">Cancel</button>
-							{% elif sess.ut_type=='exhibitor' and sess.u_id!=r.ex_creator_id %}
-								<button type="submit" value="{{ r.ex_id }}" name="pexbtn">Collaborate</button>
-							{% elif sess.u_id!=r.ex_creator_id %}
-								<button type="submit" value="{{ r.ex_id }}" name="pexbtn">Visit</button>
-							{% elif sess.u_id==r.ex_creator_id %}
-								<a href="http://localhost:5000/publishedbyme"><button type="button">View</button></a>
-							{% endif %}
-						</td>
-					{% endif %}
+					<td>
+						<a href="http://127.0.0.1:5000/details/{{ r.ex_id }}" target="_blank">
+							<button type="button" class="btn btn-primary">View</button>
+						</a>
+					</td>
 				</tr>
+				{% endif %}
 				{% endfor %}
 			</table>
-		</form>
-	</body>
-<html>
+		</div>
+		<div id="upcoming" class="tab-pane fade">
+			<h2>Upcoming Exhibitions</h2>
+			<nav class="navbar navbar-inverse control-bar">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li>
+							<div class="input-group">
+								<select class="form-control" id="sortu" onchange="cityexs(this)">
+									<option value="all">All cities</option>
+									<option value="Mumbai">Mumbai</option>
+									<option value="Banglore">Banglore</option>
+									<option value="Delhi">Delhi</option>
+									<option value="Madras">Madras</option>
+									<option value="Pune">Pune</option>
+								</select>
+							</div>
+						</li>
+					</ul>
+					<ul class="navbar-form navbar-center">
+						<li>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search" name="search" oninput="searchexs(this)">
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<div class="input-group">
+								<select class="form-control" id="catu" onchange="catexs(this)">
+									<option value="all">All categories</option>
+									{% for c in cats %}
+										<option>{{ c.cat_name.title() }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<table class="table table-striped" id="upcomingtable">
+				<tr>
+					<th>Name</th>
+					<th>Category</th>
+					<th>City</th>
+					<th>Day</th>
+					<th>Details</th>
+				</tr>
+				{% for r in exs %}
+				{% if exd[r.ex_id]=='upcoming' %}
+				<tr aria-controls="{{ r.ex_name }}">
+					<td>{{ r.ex_name.title() }}</td>
+					<td>{{ r.cat_name.title() }}</td>
+					<td>{{ r.ex_city.title() }}</td>
+					<td>{{ r.ex_start_date[:-7] }}</td>
+					<td>
+						<a href="http://127.0.0.1:5000/details/{{ r.ex_id }}" target="_blank">
+							<button type="button" class="btn btn-primary">View</button>
+						</a>
+					</td>
+				</tr>
+				{% endif %}
+				{% endfor %}
+			</table>
+		</div>
+		<div id="past" class="tab-pane fade">
+			<h2>Past Exhibitions</h2>
+			<nav class="navbar navbar-inverse control-bar">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li>
+							<div class="input-group">
+								<select class="form-control" id="sortp" onchange="cityexs(this)">
+									<option value="all">All cities</option>
+									<option value="Mumbai">Mumbai</option>
+									<option value="Banglore">Banglore</option>
+									<option value="Delhi">Delhi</option>
+									<option value="Madras">Madras</option>
+									<option value="Pune">Pune</option>
+								</select>
+							</div>
+						</li>
+					</ul>
+					<ul class="navbar-form navbar-center">
+						<li>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search" name="search" oninput="searchexs(this)">
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<div class="input-group">
+								<select class="form-control" id="catp" onchange="catexs(this)">
+									<option value="all">All categories</option>
+									{% for c in cats %}
+										<option>{{ c.cat_name.title() }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<table class="table table-striped" id="pasttable">
+				<tr>
+					<th>Name</th>
+					<th>Category</th>
+					<th>City</th>
+					<th>Day</th>
+					<th>Details</th>
+				</tr>
+				{% for r in exs %}
+				{% if exd[r.ex_id]=='past' %}
+				<tr aria-controls="{{ r.ex_name }}">
+					<td>{{ r.ex_name.title() }}</td>
+					<td>{{ r.cat_name.title() }}</td>
+					<td>{{ r.ex_city.title() }}</td>
+					<td>{{ r.ex_start_date[:-7] }}</td>
+					<td>
+						<a href="http://127.0.0.1:5000/details/{{ r.ex_id }}" target="_blank">
+							<button type="button" class="btn btn-primary">View</button>
+						</a>
+					</td>
+				</tr>
+				{% endif %}
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

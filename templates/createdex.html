@@ -1,18 +1,18 @@
-<html>
-	<body>
-		{{ sess.ut_type }}
-		<form  action = "http://localhost:5000/exaction	" method = "GET" name="expubyme" >
-			<table>
-				<tr><th>Name</th><th>Details</th><th>Edit</th><th>Participations</th></tr>
-				{% for e in exs %}
-					<tr>
-						<td>{{ e['ex_name'].title() }}</td>
-						<td><a href="http://localhost:5000/details/{{ e['ex_id'] }}" target="_blank"><button type="button">View</button></a></td>
-						<td><button name="xedit" value="{{ e['ex_id'] }}">Edit</button></td>
-						<td><button name="xparts" value="{{ e['ex_id'] }}">View</button></td>
-					</tr>
-				{% endfor %}
-			</table>
-		</form>
-	</body>
-</html>
+{% extends "layouts/navbar.html" %}
+
+{% block content %}
+<div class="container mainblock">
+	<h2>Exhibitions Published By Me</h2>
+	<table class="table table-striped">
+		<tr><th>Name</th><th>Details</th><th>Edit</th><th>Participations</th></tr>
+		{% for e in exs %}
+			<tr>
+				<td>{{ e['ex_name'].title() }}</td>
+				<td><a href="http://127.0.0.1:5000/details/{{ e['ex_id'] }}" target="_blank"><button type="button" class="btn btn-primary">View</button></a></td>
+				<td><a href="http://127.0.0.1:5000/edit/{{ e['ex_id'] }}" target="_blank"><button type="button" class="btn btn-danger">Edit</button></a></td>
+				<td><a href="http://127.0.0.1:5000/regs/{{ e['ex_id'] }}" target="_blank"><button type="button" class="btn btn-primary">Check</button></a></td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

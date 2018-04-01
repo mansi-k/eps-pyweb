@@ -29,10 +29,14 @@ class RegistrationController:
         sess = self.sm.getSession()
         if sess:
             self.rm.exParticipate(eid, sess['u_id'])
-        return redirect(url_for('search'))
+            return True
+        else:
+            return False
 
     def cPCancel(self, rid):
         sess = self.sm.getSession()
         if sess:
             self.rm.exPCancel(rid)
-        return redirect(url_for('search'))
+            return True
+        else:
+            return False

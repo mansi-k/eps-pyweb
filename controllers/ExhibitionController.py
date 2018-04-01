@@ -28,11 +28,17 @@ class ExhibitionController:
 
     def cSearch(self):
         sess = self.sm.getSession()
-        cursor, rows = self.xm.getAllExs(sess)
+        cursor, rows, exd = self.xm.getAllExs()
         exs = hp.zip_data(cursor,rows)
-        return render_template('exlist.html', exs=exs, sess=sess)
+        cursor, rows = self.xm.getCats()
+        cats = hp.zip_data(cursor,rows)
+        return render_template('exlist.html', exs=exs, sess=sess, exd=exd, cats=cats)
 
     def cDetails(self, exid):
-        cursor, rows = self.xm.exDetails(exid)
+        sess = self.sm.getSession()
+        #print("SESSION : "+sess)
+        cursor, rows = self.xm.exDetails(exid, sess)
         det = hp.zip_data(cursor, rows)
-        return render_template('details.html', detail=det)
+        cursor, rows = self.xm.exEnterprises(exid)
+        entries = hp.zip_data(cursor, rows)
+        return render_template('details.html', sess=sess, detail=det[0], ents=entries)

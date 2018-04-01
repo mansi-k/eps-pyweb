@@ -59,6 +59,6 @@ class ExhibitorModel:
         self.con.commit()
 
     def getExRegs(self, eid):
-        statement = 'select * from mitali.registration, reshma.vfuseracc, reshma.usertype where r_eid = :id and r_uid = u_id and u_type = ut_id'
+        statement = 'select * from mitali.registration, reshma.vfuseracc, reshma.usertype, reshma.pvfexhibition where r_eid = :id and r_uid = u_id and u_type = ut_id and r_eid = ex_id order by r_id'
         qr1 = self.cur.execute(statement, {'id': int(eid)})
         return self.cur, qr1.fetchall()

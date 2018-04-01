@@ -1,5 +1,67 @@
-<html>
-	<body>
-		{{ detail }}
-	</body>
-</html>
+{% extends "layouts/navbar.html" %}
+
+{% block content %}
+<div class="container mainblock">
+	<h2>{{ detail.ex_name.title() }}</h2>
+	<table class="table table-striped">
+		<tr>
+			<th>Exhibition ID</th>
+			<td>{{ detail.ex_id }}</td>
+		</tr>
+		<tr>
+			<th>Category</th>
+			<td>{{ detail.cat_name.title() }}</td>
+		</tr>
+		<tr>
+			<th>City</th>
+			<td>{{ detail.ex_city.title() }}</td>
+		</tr>
+		<tr>
+			<th>Address</th>
+			<td>{{ detail.ex_address.capitalize() }}</td>
+		</tr>
+		<tr>
+			<th>Start date-time</th>
+			<td>{{ detail.ex_start_date }}</td>
+		</tr>
+		<tr>
+			<th>End date-time</th>
+			<td>{{ detail.ex_end_date }}</td>
+		</tr>
+		<tr>
+			<th>Published by</th>
+			<td>{{ detail.u_name.title() }}</td>
+		</tr>
+		<tr>
+			<th>Are visitors allowed</th>
+			<td>{{ detail.ex_is_vrr.title() }}</td>
+		</tr>
+		<tr>
+			<th>Description</th>
+			<td>{{ detail.ex_note }}</td>
+		</tr>
+		<tr>
+			<th>Document</th>
+			<td>{{ detail.ex_doc }}</td>
+		</tr>
+		<tr>
+			{% if sess %}
+			<th>Participation</th>
+			<td>
+				<div id="partdiv">
+					{% if detail.r_id %}
+						<button type="button" value="{{ detail.r_id }}" name="cexbtn" id="cexb" onclick="cancelp(this)" class="btn btn-danger">Cancel</button>
+					{% elif sess.ut_type=='enterprise' %}
+						<button type="button" value="{{ detail.ex_id }}" name="pexbtn" id="pexb" onclick="participatex(this)" class="btn btn-primary">Exhibit</button>
+					{% elif sess.ut_type=='visitor' %}
+						<button type="button" value="{{ detail.ex_id }}" name="pexbtn" id="pexb" onclick="participatex(this)" class="btn btn-primary">Visit</button>
+					{% elif sess.u_id==detail.ex_creator_id %}
+						<a href="http://127.0.0.1:5000/regs/{{ detail.ex_id }}"><button type="button" class="btn btn-primary">View Participations</button></a>
+					{% endif %}
+				</div>
+			{% endif %}
+			</td>
+		</tr>
+	</table>
+</div>
+{% endblock %}

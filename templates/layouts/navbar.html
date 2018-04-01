@@ -1,0 +1,40 @@
+{% extends "layouts/header.html" %}
+
+{% block navbar %}
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="main-mav">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#">Home</a></li>
+                {% if sess %}
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Exhibitions <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://127.0.0.1:5000/search">All Exhibitions</a></li>
+
+                        {% if sess.ut_type=='exhibitor' %}
+                            <li><a href="http://127.0.0.1:5000/publishedbyme">My Exhibitions</a></li>
+                            <li><a href="http://127.0.0.1:5000/publish">Publish Exhibition</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% else %}
+                    <li><a href="http://127.0.0.1:5000/search">Exhibitions</a></li>
+                {% endif %}
+                <li>
+                    {% if sess %}
+                        <a href="#">{{ sess.u_name.split(' ', 1)[0].title() }}</a>
+                    {% else %}
+                        <a href="#">
+                            <span class="glyphicon glyphicon-log-in"></span> | <span class="glyphicon glyphicon-user"></span>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+{% endblock %}

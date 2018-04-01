@@ -1,3 +1,39 @@
-.btn {
-	color:red;
+h1, h2, h3 {
+    text-align: center;
+    margin: 20px;
+}
+
+.mainblock {
+    margin-top: 100px;
+}
+
+.white {
+    color: white;
+}
+
+.nav-pills>li>a {
+    border: 1px solid #337ab7;
+}
+
+@media (min-width: 768px) {
+  .navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+  }
+}
+
+.control-bar {
+    min-height: 50px;
+    padding: 0 20px 0 10px;
+}
+
+.control-bar select {
+    height: 30px;
+    border:0;
+    margin:10px 0 10px 0;
+}
+
+.control-bar input {
+    height:30px;
 }
