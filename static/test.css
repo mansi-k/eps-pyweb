@@ -37,3 +37,9 @@ h1, h2, h3 {
 .control-bar input {
     height:30px;
 }
+
+.form-group .btn {
+    width:20% !important;
+    position:relative;
+    margin: auto;
+}

@@ -19,11 +19,9 @@
 							<div class="input-group">
 								<select class="form-control" id="sorto" onchange="cityexs(this)">
 									<option value="all">All cities</option>
-									<option value="Mumbai">Mumbai</option>
-									<option value="Banglore">Banglore</option>
-									<option value="Delhi">Delhi</option>
-									<option value="Madras">Madras</option>
-									<option value="Pune">Pune</option>
+									{% for ct in cts %}
+										<option>{{ ct.ex_city.title() }}</option>
+									{% endfor %}
 								</select>
 							</div>
 						</li>
@@ -70,7 +68,7 @@
 					<td>{{ r.ex_city.title() }}</td>
 					<td>{{ r.ex_start_date[:-7] }}</td>
 					<td>
-						<a href="http://127.0.0.1:5000/details/{{ r.ex_id }}" target="_blank">
+						<a href="http://127.0.0.1:5000/details/{{ r.ex_id~'|'~r.ex_city }}" target="_blank">
 							<button type="button" class="btn btn-primary">View</button>
 						</a>
 					</td>
@@ -88,11 +86,9 @@
 							<div class="input-group">
 								<select class="form-control" id="sortu" onchange="cityexs(this)">
 									<option value="all">All cities</option>
-									<option value="Mumbai">Mumbai</option>
-									<option value="Banglore">Banglore</option>
-									<option value="Delhi">Delhi</option>
-									<option value="Madras">Madras</option>
-									<option value="Pune">Pune</option>
+									{% for ct in cts %}
+										<option>{{ ct.ex_city.title() }}</option>
+									{% endfor %}
 								</select>
 							</div>
 						</li>
@@ -131,21 +127,7 @@
 					<th>Day</th>
 					<th>Details</th>
 				</tr>
-				{% for r in exs %}
-				{% if exd[r.ex_id]=='upcoming' %}
-				<tr aria-controls="{{ r.ex_name }}">
-					<td>{{ r.ex_name.title() }}</td>
-					<td>{{ r.cat_name.title() }}</td>
-					<td>{{ r.ex_city.title() }}</td>
-					<td>{{ r.ex_start_date[:-7] }}</td>
-					<td>
-						<a href="http://127.0.0.1:5000/details/{{ r.ex_id }}" target="_blank">
-							<button type="button" class="btn btn-primary">View</button>
-						</a>
-					</td>
-				</tr>
-				{% endif %}
-				{% endfor %}
+
 			</table>
 		</div>
 		<div id="past" class="tab-pane fade">
@@ -157,11 +139,9 @@
 							<div class="input-group">
 								<select class="form-control" id="sortp" onchange="cityexs(this)">
 									<option value="all">All cities</option>
-									<option value="Mumbai">Mumbai</option>
-									<option value="Banglore">Banglore</option>
-									<option value="Delhi">Delhi</option>
-									<option value="Madras">Madras</option>
-									<option value="Pune">Pune</option>
+									{% for ct in cts %}
+										<option>{{ ct.ex_city.title() }}</option>
+									{% endfor %}
 								</select>
 							</div>
 						</li>
@@ -200,21 +180,7 @@
 					<th>Day</th>
 					<th>Details</th>
 				</tr>
-				{% for r in exs %}
-				{% if exd[r.ex_id]=='past' %}
-				<tr aria-controls="{{ r.ex_name }}">
-					<td>{{ r.ex_name.title() }}</td>
-					<td>{{ r.cat_name.title() }}</td>
-					<td>{{ r.ex_city.title() }}</td>
-					<td>{{ r.ex_start_date[:-7] }}</td>
-					<td>
-						<a href="http://127.0.0.1:5000/details/{{ r.ex_id }}" target="_blank">
-							<button type="button" class="btn btn-primary">View</button>
-						</a>
-					</td>
-				</tr>
-				{% endif %}
-				{% endfor %}
+
 			</table>
 		</div>
 	</div>

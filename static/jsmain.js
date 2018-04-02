@@ -99,7 +99,7 @@ function catexs(obj) {
     var cat = $(obj).val();
     var tp = $(obj).closest('.tab-pane').attr('id');
     var $table = $('#'+tp+'table');
-    if(cat=='All')
+    if(cat=='all')
         var rows = $table.find('tr').not(':first').show();
     else {
             var rows = $table.find('tr').not(':first').hide();
@@ -117,7 +117,7 @@ function searchexs(obj) {
     var rows = $table.find('tr').not(':first').get();
     $.each(rows, function(index, row) {
         $(row).hide();
-        if($(row).attr('aria-controls').indexOf(srch) != -1)
+        if($(row).find("td:nth-child(1)").html().toLowerCase().indexOf(srch.toLowerCase()) != -1)
             $(row).show()
     });
 }

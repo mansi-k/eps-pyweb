@@ -37,3 +37,14 @@ class RegistrationModel:
         statement = 'delete from mitali.registration where r_id = :id'
         self.cur.execute(statement, {'id': int(rid)})
         self.con.commit()
+
+    def getMyParts(self, uid, ucity):
+        statement = 'select ex_id, ex_name, ex_city, ex_start_date, r_id, cat_name from reshma.pvfexhibition, mitali.registration, mansi.cat where r_uid = :id and r_eid = ex_id and ex_cat_id = cat_id'
+        qr1 = self.cur.execute(statement, {'id': int(uid)})
+        dets = list()
+        for dt in qr1.fetchall():
+            p = list(dt)
+            p[3] = datetime.datetime.strptime(str(p[3]), '%Y-%m-%d %H:%M:%S')
+            p[3] = p[3].strftime("%B %d, %Y, %H:%M")
+            dets += [p]
+        return self.cur, dets

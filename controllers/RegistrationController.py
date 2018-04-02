@@ -40,3 +40,12 @@ class RegistrationController:
             return True
         else:
             return False
+
+    def cMyParts(self):
+        sess = self.sm.getSession()
+        if sess:
+            cursor, rows = self.rm.getMyParts(sess['u_id'], sess['u_city'])
+            parts = hp.zip_data(cursor, rows)
+            return render_template('myparts.html', sess=sess, parts=parts)
+        else:
+            return render_template('error.html', msg='Please login to your account')

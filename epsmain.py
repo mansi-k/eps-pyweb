@@ -24,11 +24,19 @@ def index():
 
 @app.route('/search/')
 def search():
-    return xc.cSearch()
+    return xc.cSearch('ongoing')
+
+@app.route('/fxsearch',methods = ['POST'])
+def xfsearch():
+    if request.method == 'POST':
+        if 'xf' in request.json:
+            res = xc.cXfSearch(request.json['xf'])
+            return json.dumps(res,ensure_ascii=False)
 
 @app.route('/details/<exid>')
 def details(exid):
-    return xc.cDetails(exid)
+    eid, ecity = exid.split('|', 2)
+    return xc.cDetails(eid, ecity)
 
 @app.route('/participate',methods = ['POST'])
 def participate():
@@ -53,17 +61,23 @@ def onpublish():
     if request.method == 'POST':
         return ec.cOnPublish(request)
 
+@app.route('/myparts')
+def myparts():
+    return rc.cMyParts()
+
 @app.route('/publishedbyme/')
 def pubyme():
     return ec.cPubyme()
 
 @app.route('/edit/<exid>')
 def edit(exid):
-    return ec.cExEdit(exid)
+    eid, ecity = exid.split('|', 2)
+    return ec.cExEdit(eid, ecity)
 
 @app.route('/regs/<exid>')
 def regs(exid):
-    return ec.cExRegs(exid)
+    eid, ecity, ename = exid.split('|', 3)
+    return ec.cExRegs(eid, ecity, ename)
 
 @app.route('/update',methods = ['POST'])
 def update():

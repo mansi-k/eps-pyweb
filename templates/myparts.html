@@ -1,0 +1,32 @@
+{% extends "layouts/navbar.html" %}
+
+{% block content %}
+<div class="container mainblock">
+	<h1>Your Participations</h1>
+    <table class="table table-striped" id="ongoingtable">
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>City</th>
+            <th>Day</th>
+            <th>Details</th>
+            <th>Participation</th>
+        </tr>
+        {% for p in parts %}
+            <tr>
+                <td>{{ p.ex_name.title() }}</td>
+                <td>{{ p.cat_name.title() }}</td>
+                <td>{{ p.ex_city.title() }}</td>
+                <td>{{ p.ex_start_date[:-7] }}</td>
+                <td>
+                    <a href="http://127.0.0.1:5000/details/{{ p.ex_id~'|'~p.ex_city }}" target="_blank">
+                        <button type="button" class="btn btn-primary">View</button>
+                    </a>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" name="cpart" onclick="cpart(this)" value="{{ p.r_id }}">Cancel</button>
+                </td>
+            </tr>
+        {% endfor %}
+</div>
+{% endblock %}
