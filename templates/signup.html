@@ -1,0 +1,119 @@
+
+{% extends "layouts/navbar.html" %}
+
+{% block content %}
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="signup.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row main">
+			<div class="panel-heading">
+	              <div class="panel-title text-center">
+               		<h1 class="title">Sign Up</h1>
+	               		<hr />
+	               	</div>
+	            </div>
+				<div class="panel-heading">
+	              <div class="panel-title text-center">
+               		<h1 class="title">Sign Up</h1>
+	               		<hr />
+	               	</div>
+	            </div>
+
+				<div class="main-login main-center">
+                    <form class="form-horizontal" method="post" action="http://localhost:5000/signup">
+						<div class="form-group">
+							<label for="uname" class="cols-sm-2 control-label">Username</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="uname" id="uname"  placeholder="Enter your Name" required/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="utype" class="cols-sm-2 control-label">User Type</label>
+							  <div class="col-sm-offset-2 col-sm-10">
+								<div class="select">
+								  <select name="utype" id="utype" required>
+											 <option value=1>Exhibitior</option>
+											 <option value=2>Enterprise</option>
+											 <option value=3>Visitor</option>
+								  </select>
+								</div>
+							  </div>
+    					</div>
+
+
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Your Email</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="email" class="form-control" name="email" id="email"  placeholder="Enter your Email" required/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="umobno" class="cols-sm-2 control-label">Mobile No</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="umobno" id="umobno"  placeholder="Enter your Mobile No" required/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="uaddress" class="cols-sm-2 control-label">Address</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="uaddress" id="uaddress"  placeholder="Enter your address" required/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="ucity" class="cols-sm-2 control-label">City</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="ucity" id="ucity"  placeholder="Enter your City" required/>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label for="password" class="cols-sm-2 control-label">Password</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password" required/>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="form-group ">
+							<input type = "submit" value = "submit" align="center"/>
+						</div>
+						<div class="login-register">
+				            <a href="http://localhost:5000/log">Login</a>
+				         </div>
+                    </form>
+                </div>
+			</div>
+		</div>
+</body>
+
+
+{% endblock %}
+

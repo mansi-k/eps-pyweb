@@ -39,24 +39,13 @@ class ExhibitorModel:
         self.con.commit()
 
     def exPubyme(self, uid):
-        statement = "select ex_id, ex_name, ex_city from reshma.pvfexhibition  where ex_creator_id = :id"
+        statement = "select ex_id, ex_name from reshma.pvfexhibition  where ex_creator_id = :id"
         qr1 = self.cur.execute(statement, {'id': int(uid)})
         return self.cur, qr1.fetchall()
 
-    def exEdit(self, eid, ecity):
-        qr1 = None
-        if ecity == 'mumbai':
-            statement = 'select * from reshma.phfexcitym, mansi.cat where ex_id = :id and cat_id = ex_cat_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
-        elif ecity == 'delhi':
-            statement = 'select * from sarthak.phfexcityd, mansi.cat where ex_id = :id and cat_id = ex_cat_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
-        elif ecity == 'banglore':
-            statement = 'select * from mitali.phfexcityb, mansi.cat where ex_id = :id and cat_id = ex_cat_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
-        else:
-            statement = 'select * from mansi.phfexcityo, mansi.cat where ex_id = :id and cat_id = ex_cat_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
+    def exEdit(self, eid):
+        statement = 'select * from mansi.exhibition, mansi.cat where ex_id = :id and cat_id = ex_cat_id'
+        qr1 = self.cur.execute(statement, {'id': int(eid)})
         return self.cur, qr1.fetchall()
 
     def exUpdate(self,request):
@@ -69,18 +58,7 @@ class ExhibitorModel:
         self.cur.execute(statement, (rfd['exname'], rfd['excat'], rfd['exaddress'], rfd['excity'], exstart, exend, 1, rff.filename, rfd['exvrr'],rfd['exnote'], rfd['exupdate']))
         self.con.commit()
 
-    def getExRegs(self, eid, ecity):
-        qr1 = None
-        if ecity == 'mumbai':
-            statement = 'select * from reshma.dhfregexm, reshma.vfuseracc, reshma.usertype where r_eid = :id and r_uid = u_id and u_type = ut_id order by r_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
-        elif ecity == 'delhi':
-            statement = 'select * from sarthak.dhfregexd, reshma.vfuseracc, reshma.usertype where r_eid = :id and r_uid = u_id and u_type = ut_id order by r_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
-        elif ecity == 'banglore':
-            statement = 'select * from mitali.dhfregexb, reshma.vfuseracc, reshma.usertype where r_eid = :id and r_uid = u_id and u_type = ut_id order by r_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
-        else:
-            statement = 'select * from mansi.dhfregexo, reshma.vfuseracc, reshma.usertype where r_eid = :id and r_uid = u_id and u_type = ut_id order by r_id'
-            qr1 = self.cur.execute(statement, {'id': int(eid)})
+    def getExRegs(self, eid):
+        statement = 'select * from mitali.registration, reshma.vfuseracc, reshma.usertype, reshma.pvfexhibition where r_eid = :id and r_uid = u_id and u_type = ut_id and r_eid = ex_id order by r_id'
+        qr1 = self.cur.execute(statement, {'id': int(eid)})
         return self.cur, qr1.fetchall()

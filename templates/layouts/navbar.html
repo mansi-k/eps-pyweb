@@ -1,5 +1,4 @@
 {% extends "layouts/header.html" %}
-
 {% block navbar %}
     <nav class="navbar navbar-inverse navbar-fixed-top" id="main-mav">
         <div class="container-fluid">
@@ -12,25 +11,32 @@
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Exhibitions <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="http://127.0.0.1:5000/search">All Exhibitions</a></li>
-                        <li><a href="http://127.0.0.1:5000/myparts">My Exhibitions</a></li>
+
                         {% if sess.ut_type=='exhibitor' %}
                             <li><a href="http://127.0.0.1:5000/publishedbyme">My Exhibitions</a></li>
                             <li><a href="http://127.0.0.1:5000/publish">Publish Exhibition</a></li>
+                        {% elif sess.ut_type=='visitor' %}
+                            <li><a href="http://127.0.0.1:5000/myparts">My Exhibitions</a></li>
                         {% endif %}
                     </ul>
                 </li>
                 {% else %}
                     <li><a href="http://127.0.0.1:5000/search">Exhibitions</a></li>
                 {% endif %}
+                {% if sess %}
+                <li><a href="http://127.0.0.1:5000/">{{ sess.u_name.split(' ', 1)[0].title() }}</a></li>
+                <li><a href="http://127.0.0.1:5000/logout">Log out</a></li>
+
+                {% else %}
+                        <li><a href="http://127.0.0.1:5000/log">
+                            <span class="glyphicon glyphicon-log-in">LogIn</span></span>
+                        </a></li>
                 <li>
-                    {% if sess %}
-                        <a href="#">{{ sess.u_name.split(' ', 1)[0].title() }}</a>
-                    {% else %}
-                        <a href="#">
-                            <span class="glyphicon glyphicon-log-in"></span> | <span class="glyphicon glyphicon-user"></span>
+                        <a href="http://127.0.0.1:5000/suser">
+                            <span class="glyphicon glyphicon-sign-up">SignUp</span></span>
                         </a>
-                    {% endif %}
                 </li>
+                    {% endif %}
             </ul>
         </div>
     </nav>
@@ -38,3 +44,4 @@
     {% block content %}
     {% endblock %}
 {% endblock %}
+

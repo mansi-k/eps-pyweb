@@ -1,5 +1,65 @@
-<html>
-   <body>
-      <h2>User {{ sess }}</h2>
+{% extends "layouts/navbar.html" %}
+
+{% block content %}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="signup.css">
+</head>
+  <body>
+
+	<div class="container">
+			<div class="row main">
+				<div class="panel-heading">
+	               <div class="panel-title text-center">
+	               		<h1 class="title">Login</h1>
+	               		<hr />
+	               	</div>
+	            </div>
+				<div class="panel-heading">
+	               <div class="panel-title text-center">
+	               		<h1 class="title">Login</h1>
+	               		<hr />
+	               	</div>
+	            </div>
+				<div class="main-login main-center">
+					<form class="form-horizontal" method="post" action="http://127.0.0.1:5000/login">
+
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Your Email</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="email" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password" class="cols-sm-2 control-label">Password</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group ">
+							<input type="submit" value="Go on, Login" align="center">
+							<a href="signup" >signup</a>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+
    </body>
+
 </html>
+{% endblock %}
