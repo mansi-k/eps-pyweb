@@ -15,7 +15,7 @@
                         {% if sess.ut_type=='exhibitor' %}
                             <li><a href="http://127.0.0.1:5000/publishedbyme">My Exhibitions</a></li>
                             <li><a href="http://127.0.0.1:5000/publish">Publish Exhibition</a></li>
-                        {% elif sess.ut_type=='visitor' %}
+                        {% else %}
                             <li><a href="http://127.0.0.1:5000/myparts">My Exhibitions</a></li>
                         {% endif %}
                     </ul>
@@ -44,4 +44,3 @@
     {% block content %}
     {% endblock %}
 {% endblock %}
-

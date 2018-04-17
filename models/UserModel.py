@@ -2,10 +2,6 @@ from werkzeug.utils import secure_filename
 import datetime
 import time
 import cx_Oracle
-import tkinter
-import tkinter.messagebox
-from tkinter import messagebox as tkMessageBox
-
 
 class UserModel:
     
@@ -40,7 +36,8 @@ class UserModel:
         cnt = qr1.fetchall()
         fcnt = cnt[0][0]
         if fcnt > 0:
-           print("user alredy exist")
+            print("user already exists")
+            return None
         else:
             typ = res['utype']
             test = "select max(u_id) from reshma.useracc"
@@ -55,6 +52,3 @@ class UserModel:
                 return True
             else:
                 return None
-
-
-

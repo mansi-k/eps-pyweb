@@ -4,13 +4,14 @@
 <div class="container mainblock">
 	<h2>Exhibitions Published By Me</h2>
 	<table class="table table-striped">
-		<tr><th>Name</th><th>Details</th><th>Edit</th><th>Participations</th></tr>
+		<tr><th>Name</th><th>City</th><th>Details</th><th>Edit</th><th>Participations</th></tr>
 		{% for e in exs %}
 			<tr>
 				<td>{{ e['ex_name'].title() }}</td>
-				<td><a href="http://127.0.0.1:5000/details/{{ e['ex_id'] }}" target="_blank"><button type="button" class="btn btn-primary">View</button></a></td>
-				<td><a href="http://127.0.0.1:5000/edit/{{ e['ex_id'] }}" target="_blank"><button type="button" class="btn btn-danger">Edit</button></a></td>
-				<td><a href="http://127.0.0.1:5000/regs/{{ e['ex_id'] }}" target="_blank"><button type="button" class="btn btn-primary">Check</button></a></td>
+				<td>{{ e['ex_city'].title() }}</td>
+				<td><a href="http://127.0.0.1:5000/details/{{ e['ex_id']~'|'~e.ex_city }}" target="_blank"><button type="button" class="btn btn-primary">View</button></a></td>
+				<td><a href="http://127.0.0.1:5000/edit/{{ e['ex_id']~'|'~e.ex_city }}" target="_blank"><button type="button" class="btn btn-danger">Edit</button></a></td>
+				<td><a href="http://127.0.0.1:5000/regs/{{ e['ex_id']~'|'~e.ex_city~'|'~e.ex_name }}" target="_blank"><button type="button" class="btn btn-primary">Check</button></a></td>
 			</tr>
 		{% endfor %}
 	</table>

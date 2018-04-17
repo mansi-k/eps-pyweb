@@ -3,10 +3,6 @@ from models.UserModel import UserModel
 from SessionManager import SessionManager
 import Helper as hp
 import cx_Oracle
-import tkinter
-import tkinter.messagebox
-from tkinter import messagebox as tkMessageBox
-
 
 
 class UserController:
@@ -30,12 +26,6 @@ class UserController:
             self.um = UserModel.getInstance(self.con, self.cur)
             self.sm = SessionManager.getInstance()
 
-    def clog(self):
-        sess = self.sm.getSession()
-        if sess is None:
-            return render_template('login.html')
-
-
     def cLogin(self, res):
         sess = self.sm.getSession()
         if sess is None:
@@ -46,11 +36,19 @@ class UserController:
         else:
             return redirect(url_for('index'))
 
+    def cLogout(self):
+        self.sm.destroySession()
+        return redirect(url_for('index'))
+
+    def clog(self):
+        sess = self.sm.getSession()
+        if sess is None:
+            return render_template('login.html')
+
     def suser(self):
         sess = self.sm.getSession()
         if sess is None:
             return render_template('signup.html')
-
 
     def cSignup(self, res):
         sess = self.sm.getSession()
@@ -60,11 +58,3 @@ class UserController:
                 return render_template('login.html')
             else:
                 return render_template('signup.html')
-
-
-
-    def cLogout(self):
-        self.sm.destroySession()
-        return redirect(url_for('index'))
-
-

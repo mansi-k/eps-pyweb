@@ -7,7 +7,6 @@ from controllers.RegistrationController import RegistrationController
 import Helper as hp
 import os
 
-
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -23,18 +22,23 @@ rc = RegistrationController.getInstance(con, cur)
 def index():
     return ic.cIndex()
 
-
 @app.route('/search/')
 def search():
-    return xc.cSearch()
+    return xc.cSearch('ongoing')
 
+@app.route('/fxsearch',methods = ['POST'])
+def xfsearch():
+    if request.method == 'POST':
+        if 'xf' in request.json:
+            res = xc.cXfSearch(request.json['xf'])
+            return json.dumps(res,ensure_ascii=False)
 
 @app.route('/details/<exid>')
 def details(exid):
-    return xc.cDetails(exid)
+    eid, ecity = exid.split('|', 2)
+    return xc.cDetails(eid, ecity)
 
-
-@app.route('/participate', methods=['POST'])
+@app.route('/participate',methods = ['POST'])
 def participate():
     if request.method == 'POST':
         if 'usid' in request.json:
@@ -48,47 +52,42 @@ def participate():
             else:
                 return json.dumps({'status': 'fail'})
 
-
 @app.route('/publish/')
 def publish():
     return ec.cPublish()
 
-
-@app.route('/onpublish', methods=['POST'])
+@app.route('/onpublish',methods = ['POST'])
 def onpublish():
     if request.method == 'POST':
         return ec.cOnPublish(request)
 
+@app.route('/myparts')
+def myparts():
+    return rc.cMyParts()
 
 @app.route('/publishedbyme/')
 def pubyme():
     return ec.cPubyme()
 
-
 @app.route('/edit/<exid>')
 def edit(exid):
-    return ec.cExEdit(exid)
-
+    eid, ecity = exid.split('|', 2)
+    return ec.cExEdit(eid, ecity)
 
 @app.route('/regs/<exid>')
 def regs(exid):
-    return ec.cExRegs(exid)
+    eid, ecity, ename = exid.split('|', 3)
+    return ec.cExRegs(eid, ecity, ename)
 
-
-@app.route('/update', methods=['POST'])
+@app.route('/update',methods = ['POST'])
 def update():
+    print ("INSIDE UPD")
     if request.method == 'POST':
         return ec.cUpdatex(request)
 
-
 @app.route('/log')
 def log():
-        return uc.clog()
-
-@app.route('/user')
-def user():
-        return uc.cuser()
-
+    return uc.clog()
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -99,8 +98,7 @@ def login():
 
 @app.route('/suser')
 def suser():
-        return uc.suser()
-
+    return uc.suser()
 
 @app.route("/signup", methods=['GET', 'POST'])
 def result():
@@ -109,13 +107,11 @@ def result():
         return uc.cSignup(res)
     return render_template('signup.html')
 
+
 @app.route('/logout')
 def logout():
     return uc.cLogout()
 
-@app.route('/myparts')
-def myparts():
-    return rc.cMyParts()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug = True)

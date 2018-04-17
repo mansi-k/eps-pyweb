@@ -26,19 +26,29 @@ class ExhibitionController:
             self.xm = ExhibitionModel.getInstance(self.con, self.cur)
             self.sm = SessionManager.getInstance()
 
-    def cSearch(self):
+    def cSearch(self, xfilter):
         sess = self.sm.getSession()
-        cursor, rows, exd = self.xm.getAllExs()
+        cursor, rows = self.xm.getFilterExs(xfilter)
         exs = hp.zip_data(cursor,rows)
         cursor, rows = self.xm.getCats()
         cats = hp.zip_data(cursor,rows)
-        return render_template('exlist.html', exs=exs, sess=sess, exd=exd, cats=cats)
+        cursor, rows = self.xm.getCities()
+        cts = hp.zip_data(cursor,rows)
+        print(exs)
+        return render_template('exlist.html', exs=exs, sess=sess, cats=cats, cts=cts)
 
-    def cDetails(self, exid):
+    def cXfSearch(self, xfilter):
+        cursor, rows = self.xm.getFilterExs(xfilter)
+        exs = hp.zip_data(cursor, rows)
+        #print(exs)
+        return exs
+
+    def cDetails(self, exid, excity):
         sess = self.sm.getSession()
         #print("SESSION : "+sess)
-        cursor, rows = self.xm.exDetails(exid, sess)
+        cursor, rows = self.xm.exDetails(exid, excity, sess)
         det = hp.zip_data(cursor, rows)
+        print("DETAIL : "+str(det))
         cursor, rows = self.xm.exEnterprises(exid)
         entries = hp.zip_data(cursor, rows)
         return render_template('details.html', sess=sess, detail=det[0], ents=entries)

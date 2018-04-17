@@ -187,4 +187,6 @@ select * from exhibition e left join cat c on ex_cat_id = cat_id left join mital
 
 select * from phfexcityo;
 
+select * from reshma.useracc;
+
 commit;

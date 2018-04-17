@@ -32,7 +32,7 @@ class ExhibitorController:
         if sess and sess['ut_type'] == 'exhibitor':
             cursor, rows = self.xm.getCats()
             cats = hp.zip_data(cursor,rows)
-            return render_template('publish.html', cats=cats)
+            return render_template('publish.html', cats=cats, sess=sess)
         else:
             return render_template('error.html', msg='Please login to exhibitor\'s account')
 
@@ -40,7 +40,7 @@ class ExhibitorController:
         sess = self.sm.getSession()
         if sess and sess['ut_type'] == 'exhibitor':
             self.em.exPublish(request, sess['u_id'])
-        return redirect(url_for('search'))
+        return redirect(url_for('pubyme'))
 
     def cPubyme(self):
         sess = self.sm.getSession()
@@ -52,10 +52,10 @@ class ExhibitorController:
             return render_template('error.html', msg='Please login to exhibitor\'s account')
 
 
-    def cExEdit(self, eid):
+    def cExEdit(self, eid, ecity):
         sess = self.sm.getSession()
         if sess and sess['ut_type'] == 'exhibitor':
-            cursor, rows = self.em.exEdit(eid)
+            cursor, rows = self.em.exEdit(eid, ecity)
             det = hp.zip_data(cursor, rows)
             cursor, rows = self.xm.getCats()
             cats = hp.zip_data(cursor, rows)
@@ -66,14 +66,15 @@ class ExhibitorController:
     def cUpdatex(self, request):
         sess = self.sm.getSession()
         if sess and sess['ut_type'] == 'exhibitor':
+            print("INSIDE CUPD")
             self.em.exUpdate(request)
         return redirect(url_for('pubyme'))
 
-    def cExRegs(self, eid):
+    def cExRegs(self, eid, ecity, ename):
         sess = self.sm.getSession()
         if sess and sess['ut_type'] == 'exhibitor':
-            cursor, rows = self.em.getExRegs(eid)
+            cursor, rows = self.em.getExRegs(eid, ecity)
             regs = hp.zip_data(cursor, rows)
-            return render_template("regs.html",regs = regs)
+            return render_template("regs.html",regs = regs, ename=ename, sess=sess)
         else:
             return render_template('error.html', msg='Please login to exhibitor\'s account')

@@ -45,7 +45,7 @@
 			<td>{{ detail.ex_doc }}</td>
 		</tr>
 		<tr>
-			{% if sess %}
+			{% if sess and sess.ut_type != 'exhibitor' %}
 			<th>Participation</th>
 			<td>
 				<div id="partdiv">
@@ -56,7 +56,7 @@
 					{% elif sess.ut_type=='visitor' %}
 						<button type="button" value="{{ detail.ex_id }}" name="pexbtn" id="pexb" onclick="participatex(this)" class="btn btn-primary">Visit</button>
 					{% elif sess.u_id==detail.ex_creator_id %}
-						<a href="http://127.0.0.1:5000/regs/{{ detail.ex_id }}"><button type="button" class="btn btn-primary">View Participations</button></a>
+						<a href="http://127.0.0.1:5000/regs/{{ detail['ex_id']~'|'~detail.ex_city~'|'~detail.ex_name }}"><button type="button" class="btn btn-primary">View Participations</button></a>
 					{% endif %}
 				</div>
 			{% endif %}
